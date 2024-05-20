@@ -22,6 +22,13 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "sass": "^1.77.2",
+    "stylelint": "^16.5.0",
+    "stylelint-config-property-sort-order-smacss": "^10.0.0",
+    "stylelint-config-sass-guidelines": "^11.1.0",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-prettier": "^5.0.0",
+    "stylelint-scss": "^6.3.0",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-checker": "^0.6.4"
