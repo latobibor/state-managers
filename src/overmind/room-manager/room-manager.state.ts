@@ -5,7 +5,8 @@ export type RoomManagerState = {
   currentBuilding?: Building;
   buildings: {
     [id: string]: Building
-  }
+  };
+  currentRoomId: string | null;
 }
 
 export const roomManagerState: RoomManagerState = {
@@ -15,5 +16,6 @@ export const roomManagerState: RoomManagerState = {
 
     return this.buildings[this.currentBuildingId];
   },
-  buildings: {}
+  buildings: {},
+  currentRoomId: null,
 }

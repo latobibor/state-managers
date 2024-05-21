@@ -1,8 +1,9 @@
 import { useOvermindActions, useOvermindState } from '../../overmind/overmind-config.ts';
 
-import './building-list-item.scss';
+import './building-manager.scss';
 import { BuildingListItem } from './building-list-item.tsx';
 import { RoomListItem } from './room-list-item.tsx';
+import { Divider, List } from '@mui/material';
 
 export function BuildingManagerOvermind() {
   const { roomManager: { buildings, currentBuilding } } = useOvermindState();
@@ -18,7 +19,12 @@ export function BuildingManagerOvermind() {
       <div className="building-manager-room-list">
         {currentBuilding && <div>
           <div>ID: {currentBuilding.id}</div>
-          {currentBuilding.rooms.map(room => (<RoomListItem key={room.id} room={room}/>))}
+          <List>
+            {Object.values(currentBuilding.rooms).map(room => (<>
+              <RoomListItem key={room.id} room={room}/>
+              <Divider variant="inset" component="li" />
+            </>))}
+          </List>
         </div>
         }
         {currentBuilding && <button onClick={addRoom}>Add room</button>}
