@@ -5,7 +5,7 @@ export function openBuilding({ state: { roomManager } }: OvermindContext, buildi
     throw new Error(`Room with the ID: [${buildingId}] was not found`);
   }
 
-  roomManager.openedBuildingId = buildingId;
+  roomManager.currentBuildingId = buildingId;
 }
 
 export function addBuilding({ state: { roomManager } }: OvermindContext) {
@@ -20,4 +20,15 @@ export function addBuilding({ state: { roomManager } }: OvermindContext) {
       checklists: []
     }]
   };
+}
+
+export function addRoom({ state: { roomManager } }: OvermindContext) {
+  if (!roomManager.currentBuilding) {
+    throw new Error('You should not be able to add room without opening a building first');
+  }
+
+  roomManager.currentBuilding.rooms.push({
+    id: 'just-a-placeholder-id-for-room',
+    checklists: []
+  })
 }
