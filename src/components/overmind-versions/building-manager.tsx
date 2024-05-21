@@ -1,36 +1,28 @@
 import { useOvermindActions, useOvermindState } from '../../overmind/overmind-config.ts';
 
-import './building.scss';
+import './building-list-item.scss';
+import { BuildingListItem } from './building-list-item.tsx';
+import { RoomListItem } from './room-list-item.tsx';
 
 export function BuildingManagerOvermind() {
   const { roomManager: { buildings, currentBuilding } } = useOvermindState();
-  const { roomManager: { addBuilding, openBuilding, addRoom } } = useOvermindActions();
+  const { roomManager: { addBuilding, addRoom } } = useOvermindActions();
 
   return <div>
     <h1>Building management</h1>
-    <div>
-      {Object.values(buildings).map((building) => (
-        <div className="building" key={building.id} onClick={() => openBuilding(building.id)}>
-          Building ID: {building.id}<br/>
-        </div>))}
-    </div>
-    <div>
-      {currentBuilding && <div>
-        <div>ID: {currentBuilding.id}</div>
-        <div>
-          {currentBuilding.rooms.map(room => (
-            <div key={room.id}>
-              Room ID: {room.id}<br/>
-              Checklists: <pre>{JSON.stringify(room.checklists, null, 2)}</pre>
-            </div>
-          ))}
-        </div>
+    <div className="building-manager-item-selection-area">
+      <div className="building-manager-list-of-buildings">
+        {Object.values(buildings).map((building) => (<BuildingListItem key={building.id} building={building}/>))}
+        <button onClick={addBuilding}>Add building</button>
       </div>
-      }
-    </div>
-    <div>
-      <button onClick={addBuilding}>Add building</button>
-      {currentBuilding && <button onClick={addRoom}>Add room</button>}
+      <div className="building-manager-room-list">
+        {currentBuilding && <div>
+          <div>ID: {currentBuilding.id}</div>
+          {currentBuilding.rooms.map(room => (<RoomListItem key={room.id} room={room}/>))}
+        </div>
+        }
+        {currentBuilding && <button onClick={addRoom}>Add room</button>}
+      </div>
     </div>
   </div>;
 }
