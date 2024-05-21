@@ -1,21 +1,23 @@
 import { useOvermindActions, useOvermindState } from '../../overmind/overmind-config.ts';
 
+import './building.scss';
+
 export function BuildingManagerOvermind() {
-  const { roomManager: { buildings, openedBuilding } } = useOvermindState();
+  const { roomManager: { buildings, openedBuildingId } } = useOvermindState();
   const { roomManager: { addBuilding, openBuilding } } = useOvermindActions();
 
   return <div>
     <h1>Building management</h1>
     <div>
-      {Object.values(buildings).map((building) => (<div key={building.id} onClick={() => openBuilding(building.id)}>
+      {Object.values(buildings).map((building) => (<div className="building" key={building.id} onClick={() => openBuilding(building.id)}>
         Building ID: {building.id}<br/>
       </div>))}
     </div>
     <div>
-      {openedBuilding && <div>
-        <div>ID: {openedBuilding.id}</div>
+      {openedBuildingId && buildings[openedBuildingId] && <div>
+        <div>ID: {buildings[openedBuildingId].id}</div>
         <div>
-          {openedBuilding.rooms.map(room => (
+          {buildings[openedBuildingId].rooms.map(room => (
             <div key={room.id}>
               Room ID: {room.id}<br/>
               Checklists: <pre>{JSON.stringify(room.checklists, null, 2)}</pre>

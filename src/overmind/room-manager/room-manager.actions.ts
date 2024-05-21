@@ -5,7 +5,7 @@ export function openBuilding({ state: { roomManager } }: OvermindContext, buildi
     throw new Error(`Room with the ID: [${buildingId}] was not found`);
   }
 
-  roomManager.openedBuilding = roomManager.buildings[buildingId];
+  roomManager.openedBuildingId = buildingId;
 }
 
 export function addBuilding({ state: { roomManager } }: OvermindContext) {
