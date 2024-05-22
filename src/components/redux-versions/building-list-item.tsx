@@ -3,20 +3,23 @@ import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemButton, ListItemT
 import DeleteIcon from '@mui/icons-material/Delete';
 import BedroomParentIcon from '@mui/icons-material/BedroomParent';
 import { openBuilding, removeBuilding } from '../../redux/room-manager/room-manager-slice.ts';
+import { useReduxDispatch } from '../../redux/redux-hooks.ts';
 
 interface BuildingProps {
   building: Building;
 }
 
-export function BuildingListItem({ building }: BuildingProps) {
+export function BuildingListItemRedux({ building }: BuildingProps) {
+  const dispatch = useReduxDispatch();
+
   return <ListItem
       secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={() => removeBuilding(building.id)}>
+        <IconButton edge="end" aria-label="delete" onClick={() => dispatch(removeBuilding(building.id))}>
           <DeleteIcon/>
         </IconButton>
       }
     >
-      <ListItemButton onClick={() => openBuilding(building.id)}>
+      <ListItemButton onClick={() => dispatch(openBuilding(building.id))}>
         <ListItemAvatar>
           <Avatar>
             <BedroomParentIcon/>

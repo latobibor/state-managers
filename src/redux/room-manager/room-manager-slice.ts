@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type RoomManagerReduxState = {
   currentBuildingId: string | null;
-  currentBuilding?: Building;
   buildings: {
     [id: string]: Building
   };
@@ -12,13 +11,6 @@ export type RoomManagerReduxState = {
 
 export const initialReduxRoomManagerState: RoomManagerReduxState = {
   currentBuildingId: null,
-  get currentBuilding() {
-    if (!this.currentBuildingId) {
-      return;
-    }
-
-    return this.buildings[this.currentBuildingId];
-  },
   buildings: {},
   currentRoomId: null,
 };
@@ -54,19 +46,19 @@ export const reduxRoomManagerSlice = createSlice({
     addRoom: (state) => {
       const randomNumber = Math.floor(Math.random() * 1000);
 
-      if (!state.currentBuilding) {
+      if (!state.currentBuildingId || !state.buildings[state.currentBuildingId]) {
         throw new Error('You should not be able to add a room without opening a building first');
       }
 
       const roomId = `room-${randomNumber}`;
 
-      state.currentBuilding.rooms[roomId] = {
+      state.buildings[state.currentBuildingId].rooms[roomId] = {
         id: roomId,
         checklists: {}
       };
     },
     removeRoom(state, { payload: roomId }: PayloadAction<string>) {
-      if (!state.currentBuilding) {
+      if (!state.currentBuildingId || !state.buildings[state.currentBuildingId]) {
         throw new Error('You should not be able to delete a room without opening a building first');
       }
 
