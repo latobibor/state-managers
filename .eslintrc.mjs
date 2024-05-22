@@ -32,7 +32,7 @@ module.exports = {
       },
     ],
   },
-  ignorePatterns: ['.eslintrc.js', '/build/**/*', '_temp_/**/*'],
+  ignorePatterns: ['.eslintrc.mjs', '/build/**/*', '_temp_/**/*'],
   settings: {
     react: {
       version: 'detect',
