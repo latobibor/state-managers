@@ -10,7 +10,7 @@ export function BuildingManagerRedux() {
   const currentBuilding = useReduxSelector((state) => state.roomManager.currentBuilding)
 
   return <div>
-    <h1>Building management</h1>
+    <h1>Building management REDUX</h1>
     <div className="building-manager-item-selection-area">
       <div className="building-manager-list-of-buildings">
         {Object.values(buildings).map((building) => (<BuildingListItem key={building.id} building={building}/>))}
