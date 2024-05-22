@@ -10,11 +10,15 @@ import '@fontsource/roboto/700.css';
 
 import { Provider as OvermindProvider } from 'overmind-react';
 import { overmind } from './overmind/overmind-config.ts';
+import { store as reduxStore } from './redux/redux-store';
+import { Provider as ReduxProvider } from 'react-redux';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <OvermindProvider value={overmind}>
-      <App/>
+      <ReduxProvider store={reduxStore}>
+        <App/>
+      </ReduxProvider>
     </OvermindProvider>
   </React.StrictMode>,
 );
