@@ -83,5 +83,6 @@ export const {
   addBuilding,
   removeBuilding,
   addRoom,
-  removeRoom
+  removeRoom,
+  selectRoom
 } = reduxRoomManagerSlice.actions;
