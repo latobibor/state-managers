@@ -4,16 +4,24 @@ import { useState } from 'react';
 import { BuildingManagerRedux } from './components/redux-versions/building-manager.tsx';
 
 function App() {
-  const [storeVersion, setStoreVersion] = useState<string>('overmind');
+    const [storeBrand, setStoreBrand] = useState<string>('overmind');
 
-  return (
-    <>
-      {storeVersion === 'overmind' && (<BuildingManagerOvermind/>)}
-      {storeVersion === 'redux' && (<BuildingManagerRedux/>)}
-      <button onClick={() => setStoreVersion('overmind')}>Use Overmind</button>
-      <button onClick={() => setStoreVersion('redux')}>Use Redux</button>
-    </>
-  );
+    return (
+        <>
+            <h1>State Manager Comparison</h1>
+            <nav>
+                <menu>
+                    <li className={storeBrand === 'overmind' ? 'selected' : ''}><a
+                        onClick={() => setStoreBrand('overmind')}>Use Overmind</a></li>
+                    <li className={storeBrand === 'redux' ? 'selected' : ''}><a onClick={() => setStoreBrand('redux')}>Use
+                        Redux</a></li>
+                </menu>
+            </nav>
+
+            {storeBrand === 'overmind' && (<BuildingManagerOvermind/>)}
+            {storeBrand === 'redux' && (<BuildingManagerRedux/>)}
+        </>
+    );
 }
 
 export default App;

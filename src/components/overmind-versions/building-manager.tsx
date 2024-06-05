@@ -10,7 +10,7 @@ export function BuildingManagerOvermind() {
   const { roomManager: { addBuilding, addRoom } } = useOvermindActions();
 
   return <div>
-    <h1>Building management OVERMIND</h1>
+    <h2>Building management OVERMIND</h2>
     <div className="building-manager-item-selection-area">
       <div className="building-manager-list-of-buildings">
         {Object.values(buildings).map((building) => (<BuildingListItem key={building.id} building={building}/>))}

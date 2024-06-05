@@ -14,7 +14,7 @@ export function BuildingManagerRedux() {
   const currentBuilding = currentBuildingId &&  buildings[currentBuildingId];
 
   return <div>
-    <h1>Building management REDUX</h1>
+    <h2>Building management REDUX</h2>
     <div className="building-manager-item-selection-area">
       <div className="building-manager-list-of-buildings">
         {Object.values(buildings).map((building) => (<BuildingListItemRedux key={building.id} building={building}/>))}
