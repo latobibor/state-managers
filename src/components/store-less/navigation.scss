@@ -1,0 +1,24 @@
+.navigation {
+  position: sticky;
+  background-color: var(--bg-subtle);
+
+  border-bottom: var(--bg-accent) solid 5px;
+
+  &__controls {
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1440px;
+
+    h1.navigation__controls-title {
+      margin: 0;
+    }
+  }
+
+  nav {
+    margin: 0;
+  }
+}
