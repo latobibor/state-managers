@@ -15,12 +15,12 @@
     "@fontsource/roboto": "^5.0.13",
     "@lowlighter/matcha": "^1.0.0",
     "@mui/icons-material": "^5.15.18",
-    "@mui/material": "^5.15.18",
+    "@mui/joy": "^5.0.0-beta.36",
     "@reduxjs/toolkit": "^2.2.5",
     "overmind": "^28.0.3",
     "overmind-react": "^29.0.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-redux": "^9.1.2"
   },
   "devDependencies": {
@@ -39,14 +39,14 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "prettier": "^3.2.5",
     "sass": "^1.77.2",
-    "stylelint": "^16.5.0",
+    "stylelint": "^16.6.1",
     "stylelint-config-property-sort-order-smacss": "^10.0.0",
     "stylelint-config-sass-guidelines": "^11.1.0",
     "stylelint-config-standard": "^36.0.0",
     "stylelint-prettier": "^5.0.0",
-    "stylelint-scss": "^6.3.0",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0",
+    "stylelint-scss": "^6.3.1",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.13",
     "vite-plugin-checker": "^0.6.4"
   }
 }
