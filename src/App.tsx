@@ -1,6 +1,8 @@
-import './App.css';
-import { BuildingManagerOvermind } from './components/overmind-versions/building-manager.tsx';
 import { useState } from 'react';
+
+import './App.scss';
+
+import { BuildingManagerOvermind } from './components/overmind-versions/building-manager.tsx';
 import { BuildingManagerRedux } from './components/redux-versions/building-manager.tsx';
 
 function App() {
