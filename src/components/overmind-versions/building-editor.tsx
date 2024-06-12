@@ -1,3 +1,4 @@
+import kebabCase from 'lodash.kebabcase';
 import { useOvermindActions, useOvermindState } from '../../overmind/overmind-config.ts';
 import { FormEvent } from 'react';
 
@@ -15,7 +16,7 @@ export function BuildingEditor() {
     const formData = new FormData(event.target as any);
 
     addBuilding({
-      id: (formData.get('building-id') || '').toString(),
+      id: kebabCase((formData.get('building-id') || '').toString()),
       name: (formData.get('building-name') || '').toString()
     });
   }
