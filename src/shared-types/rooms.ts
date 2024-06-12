@@ -2,6 +2,7 @@ import { CheckListItem } from './checklist-types.ts';
 
 export type Building = {
   id: string;
+  name: string;
   rooms: { [id: string]: Room };
 }
 

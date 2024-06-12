@@ -1,5 +1,10 @@
-.building-manager-item-selection-area {
+.building-manager {
   display: flex;
-  flex-direction: row;
-  gap: 16px;
+  justify-content: space-between;
+
+  &-item-selection-area {
+    display: flex;
+    gap: 16px;
+  }
 }
+

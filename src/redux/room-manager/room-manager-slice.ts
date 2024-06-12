@@ -33,6 +33,7 @@ export const reduxRoomManagerSlice = createSlice({
 
       state.buildings[buildingId] = {
         id: buildingId,
+        name: '',
         rooms: {}
       };
     },

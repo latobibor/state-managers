@@ -14,8 +14,9 @@ export function addBuilding({ state: { roomManager } }: OvermindContext) {
   const buildingId = `building-${randomNumber}`;
 
   roomManager.buildings[buildingId] = {
-    id: buildingId,
-    rooms: {}
+    id: '',
+    name: '',
+    rooms: {},
   };
 }
 
@@ -34,11 +35,11 @@ export function addRoom({ state: { roomManager } }: OvermindContext) {
     throw new Error('You should not be able to add a room without opening a building first');
   }
 
-  const roomId =  `room-${randomNumber}`
+  const roomId = `room-${randomNumber}`;
 
   roomManager.currentBuilding.rooms[roomId] = {
     id: roomId,
-    checklists: { }
+    checklists: {}
   };
 }
 
