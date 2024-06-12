@@ -1,35 +1,23 @@
-import { useOvermindActions, useOvermindState } from '../../overmind/overmind-config.ts';
+import { useOvermindState } from '../../overmind/overmind-config.ts';
 
 import './building-manager.scss';
 import { BuildingListItem } from './building-list-item.tsx';
-import { RoomListItem } from './room-list-item.tsx';
-import { Divider, List } from '@mui/material';
 import { BuildingEditor } from './building-editor.tsx';
+import { RoomManager } from './room-manager.tsx';
 
 export function BuildingManagerOvermind() {
-  const { roomManager: { buildings, buildingBeingEdited } } = useOvermindState();
-  const { roomManager: { addRoom } } = useOvermindActions();
+  const { roomManager: { buildings } } = useOvermindState();
 
   return <div>
     <h2>Building management OVERMIND</h2>
+
     <div className="building-manager">
       <div className="building-manager-item-selection-area">
         <div className="building-manager-list-of-buildings">
+          <h3>Buildings</h3>
           {Object.values(buildings).map((building) => (<BuildingListItem key={building.id} building={building}/>))}
         </div>
-        <div className="building-manager-room-list">
-          {buildingBeingEdited && <div>
-            <div>ID: {buildingBeingEdited.id}</div>
-            <List>
-              {Object.values(buildingBeingEdited.rooms).map(room => (<>
-                <RoomListItem key={room.id} room={room}/>
-                <Divider variant="inset" component="li"/>
-              </>))}
-            </List>
-          </div>
-          }
-          {buildingBeingEdited && <button onClick={addRoom}>Add room</button>}
-        </div>
+        <RoomManager/>
       </div>
       <BuildingEditor/>
     </div>

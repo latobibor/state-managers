@@ -9,25 +9,25 @@ interface BuildingProps {
 }
 
 export function BuildingListItem({ building }: BuildingProps) {
-  const { roomManager: { openBuilding, removeBuilding }} = useOvermindActions();
+  const { roomManager: { openBuilding, removeBuilding } } = useOvermindActions();
 
   return <ListItem
-      secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={() => removeBuilding(building.id)}>
-          <DeleteIcon/>
-        </IconButton>
-      }
-    >
-      <ListItemButton onClick={() => openBuilding(building.id)}>
-        <ListItemAvatar>
-          <Avatar>
-            <BedroomParentIcon/>
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={`Building ID: ${building.id}`}
-          secondary={`No. of rooms: ${Object.keys(building.rooms).length}`}
-        />
-      </ListItemButton>
-    </ListItem>;
+    secondaryAction={
+      <IconButton edge="end" aria-label="delete" onClick={() => removeBuilding(building.id)}>
+        <DeleteIcon/>
+      </IconButton>
+    }
+  >
+    <ListItemButton onClick={() => openBuilding(building.id)}>
+      <ListItemAvatar>
+        <Avatar>
+          <BedroomParentIcon/>
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText
+        primary={`Building: ${building.name}`}
+        secondary={`ID: ${building.id}. Rooms: ${Object.keys(building.rooms).length}`}
+      />
+    </ListItemButton>
+  </ListItem>;
 }
