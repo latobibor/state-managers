@@ -1,13 +1,10 @@
 import kebabCase from 'lodash.kebabcase';
 import { useOvermindActions, useOvermindState } from '../../overmind/overmind-config.ts';
 import { FormEvent } from 'react';
-import { BigPlusButton } from '../store-less/big-plus-button.tsx';
 
 export function BuildingEditor() {
   const { roomManager: { buildingBeingEdited } } = useOvermindState();
-  const { roomManager: { addBuilding, createSkeletonBuilding, closeBuilding, removeBuilding } } = useOvermindActions();
-  
-  const isEditorOpen = !!buildingBeingEdited;
+  const { roomManager: { addBuilding, closeBuilding, removeBuilding } } = useOvermindActions();
 
   function addBuildingByPreventingDefault(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -31,22 +28,29 @@ export function BuildingEditor() {
   }
 
   return <div className="building-manager-building-form">
-    {!isEditorOpen && <BigPlusButton onClick={createSkeletonBuilding}/>}
-    {isEditorOpen && <form onSubmit={addBuildingByPreventingDefault}>
+    <form onSubmit={addBuildingByPreventingDefault}>
       <fieldset>
         <legend>Edit building</legend>
         <label>ID:
-          <input name="building-id" type="text" placeholder="Building ID"
-                 defaultValue={buildingBeingEdited && buildingBeingEdited.id}/>
+          <input name="building-id"
+                 type="text"
+                 placeholder="Building ID"
+                 minLength={3}
+                 defaultValue={buildingBeingEdited && buildingBeingEdited.id}
+          />
         </label>
         <label>Name:
           <small>A colloquial name you can easily remember</small>
-          <input name="building-name" type="text" placeholder="Building name"
+          <input name="building-name"
+                 type="text"
+                 placeholder="Building name"
+                 minLength={3}
                  defaultValue={buildingBeingEdited && buildingBeingEdited.name}/>
         </label>
         <button type="submit">{buildingBeingEdited && buildingBeingEdited.id.length > 0 ? 'Edit' : 'Add'} Building
         </button>
+        <button type="reset" className="attention" onClick={closeBuilding}>Close</button>
       </fieldset>
-    </form>}
+    </form>
   </div>;
 }
