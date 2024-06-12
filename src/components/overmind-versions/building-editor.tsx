@@ -1,12 +1,15 @@
 import kebabCase from 'lodash.kebabcase';
 import { useOvermindActions, useOvermindState } from '../../overmind/overmind-config.ts';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
+import { BigPlusButton } from '../store-less/big-plus-button.tsx';
 
 export function BuildingEditor() {
   // TODO: there should be a distinction between building edited and an open one that we can add rooms to
   // or we should be doing adding rooms here; or we should open another route when a building is open
   const { roomManager: { currentBuilding } } = useOvermindState();
   const { roomManager: { addBuilding } } = useOvermindActions();
+
+  const [isEditorOpen, setIsEditorOpen] = useState(!!currentBuilding);
 
   function addBuildingByPreventingDefault(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -19,23 +22,26 @@ export function BuildingEditor() {
       id: kebabCase((formData.get('building-id') || '').toString()),
       name: (formData.get('building-name') || '').toString()
     });
+
+    setIsEditorOpen(false);
   }
 
   return <div className="building-manager-building-form">
-    <form onSubmit={addBuildingByPreventingDefault}>
+    {!isEditorOpen && <BigPlusButton onClick={() => setIsEditorOpen(true)}/>}
+    {isEditorOpen && <form onSubmit={addBuildingByPreventingDefault}>
       <fieldset>
         <legend>Edit building</legend>
         <label>ID:
           <input name="building-id" type="text" placeholder="Building ID"
-                 value={currentBuilding && currentBuilding.id}/>
+                 defaultValue={currentBuilding && currentBuilding.id}/>
         </label>
         <label>Name:
           <small>A colloquial name you can easily remember</small>
           <input name="building-name" type="text" placeholder="Building name"
-                 value={currentBuilding && currentBuilding.name}/>
+                 defaultValue={currentBuilding && currentBuilding.name}/>
         </label>
         <button type="submit">Add Building</button>
       </fieldset>
-    </form>
+    </form>}
   </div>;
 }
