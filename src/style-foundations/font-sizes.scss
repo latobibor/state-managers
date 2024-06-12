@@ -1,0 +1,43 @@
+:root {
+  --ratio: 1.25;
+  --small-space-5: calc(var(--small-space-4) / var(--ratio));
+  --small-space-4: calc(var(--small-space-3) / var(--ratio));
+  --small-space-3: calc(var(--small-space-2) / var(--ratio));
+  --small-space-2: calc(var(--small-space-1) / var(--ratio));
+  --small-space-1: calc(var(--spacing-base) / var(--ratio));
+  --spacing-base: calc(0.25vw + 0.825em);
+  --big-space-1: calc(var(--spacing-base) * var(--ratio));
+  --big-space-2: calc(var(--big-space-1) * var(--ratio));
+  --big-space-3: calc(var(--big-space-2) * var(--ratio));
+  --big-space-4: calc(var(--big-space-3) * var(--ratio));
+  --big-space-5: calc(var(--big-space-4) * var(--ratio));
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: var(--big-space-4);
+}
+
+h2 {
+  margin: var(--big-space-1) 0 var(--small-space-4) 0;
+  font-size: var(--big-space-3);
+}
+
+h3 {
+  margin: var(--spacing-base) 0 var(--small-space-5) 0;
+  font-size: var(--big-space-2);
+}
+
+h4 {
+  margin: var(--small-space-1) 0 var(--small-space-5) 0;
+  font-size: var(--big-space-1);
+}
+
+h5 {
+  margin: 0;
+  font-size: var(--spacing-base);
+}
+
+body {
+  font-size: var(--spacing-base);
+}

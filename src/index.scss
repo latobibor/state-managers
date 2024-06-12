@@ -1,3 +1,5 @@
+@use './style-foundations/font-sizes';
+
 @mixin full-size {
   min-width: 100vw;
   min-height: 100vh;
