@@ -12,6 +12,8 @@ export function openBuilding({ state: { roomManager } }: OvermindContext, buildi
 }
 
 export function createSkeletonBuilding({ state: { roomManager } }: OvermindContext) {
+  roomManager.buildingBeingEdited = undefined;
+
   roomManager.buildingBeingEdited = {
     id: '',
     name: '',
