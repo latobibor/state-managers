@@ -6,9 +6,7 @@ import { BigPlusButton } from '../store-less/big-plus-button.tsx';
 export function BuildingEditor() {
   const { roomManager: { buildingBeingEdited } } = useOvermindState();
   const { roomManager: { addBuilding, createSkeletonBuilding, closeBuilding, removeBuilding } } = useOvermindActions();
-
-  console.log('BuildingEditor', buildingBeingEdited);
-
+  
   const isEditorOpen = !!buildingBeingEdited;
 
   function addBuildingByPreventingDefault(event: FormEvent<HTMLFormElement>) {
