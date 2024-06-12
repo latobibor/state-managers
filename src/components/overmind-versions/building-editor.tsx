@@ -1,15 +1,15 @@
 import kebabCase from 'lodash.kebabcase';
 import { useOvermindActions, useOvermindState } from '../../overmind/overmind-config.ts';
-import { FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 import { BigPlusButton } from '../store-less/big-plus-button.tsx';
 
 export function BuildingEditor() {
-  // TODO: there should be a distinction between building edited and an open one that we can add rooms to
-  // or we should be doing adding rooms here; or we should open another route when a building is open
-  const { roomManager: { currentBuilding } } = useOvermindState();
-  const { roomManager: { addBuilding } } = useOvermindActions();
+  const { roomManager: { buildingBeingEdited } } = useOvermindState();
+  const { roomManager: { addBuilding, createSkeletonBuilding, closeBuilding, removeBuilding } } = useOvermindActions();
 
-  const [isEditorOpen, setIsEditorOpen] = useState(!!currentBuilding);
+  console.log('BuildingEditor', buildingBeingEdited);
+
+  const isEditorOpen = !!buildingBeingEdited;
 
   function addBuildingByPreventingDefault(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -18,29 +18,36 @@ export function BuildingEditor() {
     // TODO: this is ugly and should be replaced by some standard library
     const formData = new FormData(event.target as any);
 
+    const newId = kebabCase((formData.get('building-id') || '').toString());
+
     addBuilding({
-      id: kebabCase((formData.get('building-id') || '').toString()),
+      id: newId,
       name: (formData.get('building-name') || '').toString()
     });
 
-    setIsEditorOpen(false);
+    closeBuilding();
+
+    if (buildingBeingEdited && buildingBeingEdited?.id !== newId) {
+      removeBuilding(buildingBeingEdited.id);
+    }
   }
 
   return <div className="building-manager-building-form">
-    {!isEditorOpen && <BigPlusButton onClick={() => setIsEditorOpen(true)}/>}
+    {!isEditorOpen && <BigPlusButton onClick={createSkeletonBuilding}/>}
     {isEditorOpen && <form onSubmit={addBuildingByPreventingDefault}>
       <fieldset>
         <legend>Edit building</legend>
         <label>ID:
           <input name="building-id" type="text" placeholder="Building ID"
-                 defaultValue={currentBuilding && currentBuilding.id}/>
+                 defaultValue={buildingBeingEdited && buildingBeingEdited.id}/>
         </label>
         <label>Name:
           <small>A colloquial name you can easily remember</small>
           <input name="building-name" type="text" placeholder="Building name"
-                 defaultValue={currentBuilding && currentBuilding.name}/>
+                 defaultValue={buildingBeingEdited && buildingBeingEdited.name}/>
         </label>
-        <button type="submit">Add Building</button>
+        <button type="submit">{buildingBeingEdited && buildingBeingEdited.id.length > 0 ? 'Edit' : 'Add'} Building
+        </button>
       </fieldset>
     </form>}
   </div>;

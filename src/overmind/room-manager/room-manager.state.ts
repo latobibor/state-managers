@@ -1,8 +1,7 @@
 import { Building } from '../../shared-types/rooms.ts';
 
 export type RoomManagerState = {
-  currentBuildingId: string | null;
-  currentBuilding?: Building;
+  buildingBeingEdited?: Building;
   buildings: {
     [id: string]: Building
   };
@@ -10,12 +9,7 @@ export type RoomManagerState = {
 }
 
 export const roomManagerState: RoomManagerState = {
-  currentBuildingId: null,
-  get currentBuilding() {
-    if (!this.currentBuildingId) { return; }
-
-    return this.buildings[this.currentBuildingId];
-  },
+  buildingBeingEdited: undefined,
   buildings: {},
   currentRoomId: null,
-}
+};
