@@ -1,4 +1,5 @@
 import { OvermindContext } from '../overmind-config.ts';
+import { Building } from '../../shared-types/rooms.ts';
 
 export function openBuilding({ state: { roomManager } }: OvermindContext, buildingId: string) {
   if (!roomManager.buildings[buildingId]) {
@@ -8,14 +9,10 @@ export function openBuilding({ state: { roomManager } }: OvermindContext, buildi
   roomManager.currentBuildingId = buildingId;
 }
 
-export function addBuilding({ state: { roomManager } }: OvermindContext) {
-  const randomNumber = Math.floor(Math.random() * 1000);
-
-  const buildingId = `building-${randomNumber}`;
-
-  roomManager.buildings[buildingId] = {
-    id: '',
-    name: '',
+export function addBuilding({ state: { roomManager } }: OvermindContext, building: Omit<Building, 'rooms'>) {
+  roomManager.buildings[building.id] = {
+    id: building.id,
+    name: building.name,
     rooms: {},
   };
 }

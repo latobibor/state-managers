@@ -8,7 +8,7 @@ import { BuildingEditor } from './building-editor.tsx';
 
 export function BuildingManagerOvermind() {
   const { roomManager: { buildings, currentBuilding } } = useOvermindState();
-  const { roomManager: { addBuilding, addRoom } } = useOvermindActions();
+  const { roomManager: { addRoom } } = useOvermindActions();
 
   return <div>
     <h2>Building management OVERMIND</h2>
@@ -16,7 +16,6 @@ export function BuildingManagerOvermind() {
       <div className="building-manager-item-selection-area">
         <div className="building-manager-list-of-buildings">
           {Object.values(buildings).map((building) => (<BuildingListItem key={building.id} building={building}/>))}
-          <button onClick={addBuilding}>Add building</button>
         </div>
         <div className="building-manager-room-list">
           {currentBuilding && <div>
