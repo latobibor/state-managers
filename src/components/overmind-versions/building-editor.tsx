@@ -30,7 +30,7 @@ export function BuildingEditor() {
   return <div className="building-manager-building-form">
     <form onSubmit={addBuildingByPreventingDefault}>
       <fieldset>
-        <legend>Edit building</legend>
+        <legend>{buildingBeingEdited && buildingBeingEdited.id.length > 0 ? 'Update' : 'Add'} Building</legend>
         <label>ID:
           <input name="building-id"
                  type="text"
@@ -47,7 +47,7 @@ export function BuildingEditor() {
                  minLength={3}
                  defaultValue={buildingBeingEdited && buildingBeingEdited.name}/>
         </label>
-        <button type="submit">{buildingBeingEdited && buildingBeingEdited.id.length > 0 ? 'Edit' : 'Add'} Building
+        <button type="submit">{buildingBeingEdited && buildingBeingEdited.id.length > 0 ? 'Update' : 'Add'} Building
         </button>
         <button type="reset" className="attention" onClick={closeBuilding}>Close</button>
       </fieldset>
