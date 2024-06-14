@@ -1,10 +1,11 @@
 import { OvermindContext } from '../overmind-config.ts';
-import { Room } from '../../shared-types/rooms.ts';
+import { Room, RoomType } from '../../shared-types/rooms.ts';
 
 export function createSkeletonRoom({ state: { roomManager } }: OvermindContext) {
   roomManager.roomBeingEdited = {
     id: '',
-    checklists: {}
+    checklists: {},
+    type: RoomType.Bedroom,
   };
 }
 
@@ -20,7 +21,7 @@ export function removeRoom({ state: { buildingManager } }: OvermindContext, room
   if (!buildingManager.buildingBeingEdited) {
     throw new Error('You should not be able to delete a room without opening a building first');
   }
-  
+
   delete buildingManager.buildings[buildingManager.buildingBeingEdited.id].rooms[roomId];
 }
 
@@ -29,7 +30,7 @@ export function selectRoom({ state: { buildingManager, roomManager } }: Overmind
     throw new Error('You should not be able to select a room without having an open building first');
   }
 
-  roomManager.roomBeingEdited = buildingManager.buildingBeingEdited.rooms[roomId];
+  roomManager.roomBeingEdited = { ...buildingManager.buildingBeingEdited.rooms[roomId] };
 }
 
 export function closeRoom({ state: { roomManager } }: OvermindContext) {

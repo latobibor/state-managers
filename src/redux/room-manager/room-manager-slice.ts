@@ -1,4 +1,4 @@
-import { Building } from '../../shared-types/rooms.ts';
+import { Building, RoomType } from '../../shared-types/rooms.ts';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type RoomManagerReduxState = {
@@ -55,7 +55,8 @@ export const reduxRoomManagerSlice = createSlice({
 
       state.buildings[state.currentBuildingId].rooms[roomId] = {
         id: roomId,
-        checklists: {}
+        checklists: {},
+        type: RoomType.Bedroom
       };
     },
     removeRoom(state, { payload: roomId }: PayloadAction<string>) {

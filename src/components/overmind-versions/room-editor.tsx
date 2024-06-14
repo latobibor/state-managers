@@ -1,6 +1,7 @@
 import kebabCase from 'lodash.kebabcase';
 import { useOvermindActions, useOvermindState } from '../../overmind/overmind-config.ts';
 import { FormEvent } from 'react';
+import { RoomType } from '../../shared-types/rooms.ts';
 
 export function RoomEditor() {
   const { buildingManager: { buildingBeingEdited }, roomManager: { roomBeingEdited } } = useOvermindState();
@@ -14,10 +15,18 @@ export function RoomEditor() {
     const formData = new FormData(event.target as any);
 
     const newId = kebabCase((formData.get('room-id') || '').toString());
+    const typeAsString = (formData.get('room-type') || '').toString();
+
+    const foundType = Object.entries(RoomType).find(([_, value]) => value === typeAsString);
+
+    if (!foundType) {
+      throw new Error(`Ay ay, ${typeAsString} was not found in RoomType enum containing [${Object.values(RoomType).join(',')}]!`);
+    }
 
     addRoom({
       id: newId,
-      checklists: {}
+      checklists: {},
+      type: foundType[1]
     });
 
     closeRoom();
@@ -40,6 +49,11 @@ export function RoomEditor() {
                  defaultValue={roomBeingEdited && roomBeingEdited.id}
           />
         </label>
+        <select name="room-type" defaultValue={roomBeingEdited?.type}>
+          {Object.entries(RoomType).map(([key, value]) => <option key={key}>
+            {value}
+          </option>)}
+        </select>
         <button type="submit">{roomBeingEdited && roomBeingEdited.id.length > 0 ? 'Update' : 'Add'} Room
         </button>
         <button type="reset" className="attention" onClick={closeRoom}>Close</button>
