@@ -8,8 +8,11 @@ import { BigPlusButton } from '../store-less/big-plus-button.tsx';
 import { RoomEditor } from './room-editor.tsx';
 
 export function BuildingManagerOvermind() {
-  const { roomManager: { createSkeletonBuilding } } = useOvermindActions();
-  const { roomManager: { buildings, roomBeingEdited, buildingBeingEdited } } = useOvermindState();
+  const { buildingManager: { createSkeletonBuilding } } = useOvermindActions();
+  const {
+    buildingManager: { buildings, buildingBeingEdited },
+    roomManager: { roomBeingEdited }
+  } = useOvermindState();
 
   return <div>
     <h2>Building management OVERMIND</h2>

@@ -6,11 +6,13 @@ import { appConfig } from './app';
 import { checkListEditorConfig } from './checklist-editor';
 import { checklistManagerConfig } from './checklist-manager';
 import { roomManagerConfig } from './room-manager';
+import { buildingManagerConfig } from './building-manager';
 
 export const config = namespaced({
   app: appConfig,
   checklistEditor: checkListEditorConfig,
   checklistManager: checklistManagerConfig,
+  buildingManager: buildingManagerConfig,
   roomManager: roomManagerConfig,
 });
 

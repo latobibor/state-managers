@@ -9,7 +9,7 @@ interface BuildingProps {
 }
 
 export function BuildingListItem({ building }: BuildingProps) {
-  const { roomManager: { openBuilding, removeBuilding } } = useOvermindActions();
+  const { buildingManager: { openBuilding, removeBuilding } } = useOvermindActions();
 
   return <ListItem
     secondaryAction={

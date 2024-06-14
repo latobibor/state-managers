@@ -3,7 +3,7 @@ import { useOvermindActions, useOvermindState } from '../../overmind/overmind-co
 import { FormEvent } from 'react';
 
 export function RoomEditor() {
-  const { roomManager: { buildingBeingEdited, roomBeingEdited } } = useOvermindState();
+  const { buildingManager: { buildingBeingEdited }, roomManager: { roomBeingEdited } } = useOvermindState();
   const { roomManager: { addRoom, closeRoom, removeRoom } } = useOvermindActions();
 
   function addRoomWhilePreventingDefault(event: FormEvent<HTMLFormElement>) {

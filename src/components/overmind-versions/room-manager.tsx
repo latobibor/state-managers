@@ -5,7 +5,7 @@ import { BigPlusButton } from '../store-less/big-plus-button.tsx';
 
 export function RoomManager() {
   const { roomManager: { createSkeletonRoom } } = useOvermindActions();
-  const { roomManager: { buildingBeingEdited } } = useOvermindState();
+  const { buildingManager: { buildingBeingEdited } } = useOvermindState();
 
   return <div className="building-manager-room-list">
     <h3>Rooms</h3>
