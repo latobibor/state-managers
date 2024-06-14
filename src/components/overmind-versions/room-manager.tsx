@@ -4,7 +4,7 @@ import { useOvermindActions, useOvermindState } from '../../overmind/overmind-co
 import { BigPlusButton } from '../store-less/big-plus-button.tsx';
 
 export function RoomManager() {
-  const { roomManager: { addRoom } } = useOvermindActions();
+  const { roomManager: { createSkeletonRoom } } = useOvermindActions();
   const { roomManager: { buildingBeingEdited } } = useOvermindState();
 
   return <div className="building-manager-room-list">
@@ -16,7 +16,7 @@ export function RoomManager() {
           <Divider variant="inset" component="li"/>
         </>))}
       </List>
-      <BigPlusButton onClick={addRoom}/>
+      <BigPlusButton onClick={createSkeletonRoom}/>
     </div>
     }
   </div>;

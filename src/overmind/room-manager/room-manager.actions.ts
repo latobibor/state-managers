@@ -1,5 +1,5 @@
 import { OvermindContext } from '../overmind-config.ts';
-import { Building } from '../../shared-types/rooms.ts';
+import { Building, Room } from '../../shared-types/rooms.ts';
 
 export function openBuilding({ state: { roomManager } }: OvermindContext, buildingId: string) {
   if (!roomManager.buildings[buildingId]) {
@@ -45,19 +45,19 @@ export function closeBuilding({ state: { roomManager } }: OvermindContext) {
   roomManager.buildingBeingEdited = undefined;
 }
 
-export function addRoom({ state: { roomManager } }: OvermindContext) {
-  const randomNumber = Math.floor(Math.random() * 1000);
-
-  if (!roomManager.buildingBeingEdited) {
-    throw new Error('You should not be able to add a room without opening a building first');
-  }
-
-  const roomId = `room-${randomNumber}`;
-
-  roomManager.buildingBeingEdited.rooms[roomId] = {
-    id: roomId,
+export function createSkeletonRoom({ state: { roomManager } }: OvermindContext) {
+  roomManager.roomBeingEdited = {
+    id: '',
     checklists: {}
   };
+}
+
+export function addRoom({ state: { roomManager } }: OvermindContext, room: Room) {
+  if (!roomManager.buildingBeingEdited) {
+    throw new Error('You cannot add room if no building was selected!');
+  }
+
+  roomManager.buildings[roomManager.buildingBeingEdited.id].rooms[room.id] = room;
 }
 
 export function removeRoom({ state: { roomManager } }: OvermindContext, roomId: string) {
@@ -65,9 +65,17 @@ export function removeRoom({ state: { roomManager } }: OvermindContext, roomId: 
     throw new Error('You should not be able to delete a room without opening a building first');
   }
 
-  delete roomManager.buildings[roomId];
+  delete roomManager.buildings[roomManager.buildingBeingEdited.id].rooms[roomId];
 }
 
 export function selectRoom({ state: { roomManager } }: OvermindContext, roomId: string) {
-  roomManager.currentRoomId = roomId;
+  if (!roomManager.buildingBeingEdited) {
+    throw new Error('You should not be able to select a room without having an open building first');
+  }
+
+  roomManager.roomBeingEdited = roomManager.buildingBeingEdited.rooms[roomId];
+}
+
+export function closeRoom({ state: { roomManager } }: OvermindContext) {
+  roomManager.roomBeingEdited = undefined;
 }

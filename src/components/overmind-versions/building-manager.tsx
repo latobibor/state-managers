@@ -5,10 +5,11 @@ import { BuildingListItem } from './building-list-item.tsx';
 import { BuildingEditor } from './building-editor.tsx';
 import { RoomManager } from './room-manager.tsx';
 import { BigPlusButton } from '../store-less/big-plus-button.tsx';
+import { RoomEditor } from './room-editor.tsx';
 
 export function BuildingManagerOvermind() {
   const { roomManager: { createSkeletonBuilding } } = useOvermindActions();
-  const { roomManager: { buildings, buildingBeingEdited } } = useOvermindState();
+  const { roomManager: { buildings, roomBeingEdited, buildingBeingEdited } } = useOvermindState();
 
   return <div>
     <h2>Building management OVERMIND</h2>
@@ -22,7 +23,8 @@ export function BuildingManagerOvermind() {
         </div>
         {!!buildingBeingEdited && Object.keys(buildings).length > 0 && <RoomManager/>}
       </div>
-      {!!buildingBeingEdited && <BuildingEditor/>}
+      {!!buildingBeingEdited && !roomBeingEdited && <BuildingEditor/>}
+      {roomBeingEdited && <RoomEditor/>}
     </div>
   </div>;
 }
