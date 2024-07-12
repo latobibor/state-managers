@@ -4,7 +4,6 @@ import { Room, RoomType } from '../../shared-types/rooms.ts';
 export function createSkeletonRoom({ state: { roomManager } }: OvermindContext) {
   roomManager.roomBeingEdited = {
     id: '',
-    checklists: {},
     type: RoomType.Bedroom,
   };
 }

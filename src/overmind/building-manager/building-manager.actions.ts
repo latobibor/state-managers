@@ -17,7 +17,7 @@ export function createSkeletonBuilding({ state: { buildingManager } }: OvermindC
   buildingManager.buildingBeingEdited = {
     id: '',
     name: '',
-    rooms: {}
+    rooms: {},
   };
 }
 
@@ -43,4 +43,23 @@ export function removeBuilding({ state: { buildingManager } }: OvermindContext, 
 
 export function closeBuilding({ state: { buildingManager } }: OvermindContext) {
   buildingManager.buildingBeingEdited = undefined;
+}
+
+export function addChecklist({ state: { buildingManager } }: OvermindContext, buildingId: string) {
+  if (!buildingManager.buildings[buildingId]) {
+    throw new Error(`Building with the ID: [${buildingId}] was not found`);
+  }
+
+  buildingManager.buildings[buildingId].checklist = {
+    id: 'placeholder',
+    items: [],
+  };
+}
+
+export function removeChecklist({ state: { buildingManager } }: OvermindContext, buildingId: string) {
+  if (!buildingManager.buildings[buildingId]) {
+    throw new Error(`Building with the ID: [${buildingId}] was not found`);
+  }
+
+  delete buildingManager.buildings[buildingId].checklist;
 }

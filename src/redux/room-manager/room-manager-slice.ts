@@ -55,7 +55,6 @@ export const reduxRoomManagerSlice = createSlice({
 
       state.buildings[state.currentBuildingId].rooms[roomId] = {
         id: roomId,
-        checklists: {},
         type: RoomType.Bedroom
       };
     },

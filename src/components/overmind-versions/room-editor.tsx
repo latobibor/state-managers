@@ -4,8 +4,13 @@ import { FormEvent } from 'react';
 import { RoomType } from '../../shared-types/rooms.ts';
 
 export function RoomEditor() {
-  const { buildingManager: { buildingBeingEdited }, roomManager: { roomBeingEdited } } = useOvermindState();
-  const { roomManager: { addRoom, closeRoom, removeRoom } } = useOvermindActions();
+  const {
+    buildingManager: { buildingBeingEdited },
+    roomManager: { roomBeingEdited },
+  } = useOvermindState();
+  const {
+    roomManager: { addRoom, closeRoom, removeRoom },
+  } = useOvermindActions();
 
   function addRoomWhilePreventingDefault(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -25,8 +30,7 @@ export function RoomEditor() {
 
     addRoom({
       id: newId,
-      checklists: {},
-      type: foundType[1]
+      type: foundType[1],
     });
 
     closeRoom();
@@ -36,28 +40,28 @@ export function RoomEditor() {
     }
   }
 
-  return <div className="building-manager-building-form">
-    <form onSubmit={addRoomWhilePreventingDefault}>
-      <fieldset>
-        <legend>{roomBeingEdited && roomBeingEdited.id.length > 0 ? 'Update' : 'Add'} room
-          to {buildingBeingEdited?.name}</legend>
-        <label>ID:
-          <input name="room-id"
-                 type="text"
-                 placeholder="Room ID"
-                 minLength={3}
-                 defaultValue={roomBeingEdited && roomBeingEdited.id}
-          />
-        </label>
-        <select name="room-type" defaultValue={roomBeingEdited?.type}>
-          {Object.entries(RoomType).map(([key, value]) => <option key={key}>
-            {value}
-          </option>)}
-        </select>
-        <button type="submit">{roomBeingEdited && roomBeingEdited.id.length > 0 ? 'Update' : 'Add'} Room
-        </button>
-        <button type="reset" className="attention" onClick={closeRoom}>Close</button>
-      </fieldset>
-    </form>
-  </div>;
+  return (
+    <div className="building-manager-building-form">
+      <form onSubmit={addRoomWhilePreventingDefault}>
+        <fieldset>
+          <legend>
+            {roomBeingEdited && roomBeingEdited.id.length > 0 ? 'Update' : 'Add'} room to {buildingBeingEdited?.name}
+          </legend>
+          <label>
+            ID:
+            <input name="room-id" type="text" placeholder="Room ID" minLength={3} defaultValue={roomBeingEdited && roomBeingEdited.id} />
+          </label>
+          <select name="room-type" defaultValue={roomBeingEdited?.type}>
+            {Object.entries(RoomType).map(([key, value]) => (
+              <option key={key}>{value}</option>
+            ))}
+          </select>
+          <button type="submit">{roomBeingEdited && roomBeingEdited.id.length > 0 ? 'Update' : 'Add'} Room</button>
+          <button type="reset" className="attention" onClick={closeRoom}>
+            Close
+          </button>
+        </fieldset>
+      </form>
+    </div>
+  );
 }
