@@ -27,7 +27,7 @@ export function BuildingEditor() {
 
     closeBuilding();
 
-    if (buildingBeingEdited && buildingBeingEdited?.id !== newId) {
+    if (buildingBeingEdited && buildingBeingEdited.id !== '' && buildingBeingEdited.id !== newId) {
       removeBuilding(buildingBeingEdited.id);
     }
   }
@@ -41,6 +41,8 @@ export function BuildingEditor() {
 
     addChecklist(buildingBeingEdited?.id);
   }
+
+  console.log('Checklist of Building', buildingBeingEdited?.checklist);
 
   return (
     <div className="building-manager-building-form">
