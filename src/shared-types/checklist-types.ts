@@ -27,6 +27,8 @@ export type PhotoItem = BaseListItem & {
   maxNumber: number;
 };
 
+// TODO: TaskItem => only a checkbox with a label "Have you finished washing up?"
+
 export type CheckListItem = YesNoListItem | FreeTextItem | PhotoItem;
 
 export type CheckList = {

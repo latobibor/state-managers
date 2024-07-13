@@ -1,5 +1,6 @@
 import { OvermindContext } from '../overmind-config.ts';
 import { Building } from '../../shared-types/rooms.ts';
+import { CheckList } from '../../shared-types/checklist-types.ts';
 
 export function openBuilding({ state: { buildingManager } }: OvermindContext, buildingId: string) {
   if (!buildingManager.buildings[buildingId]) {
@@ -62,4 +63,14 @@ export function removeChecklist({ state: { buildingManager } }: OvermindContext,
   }
 
   delete buildingManager.buildings[buildingId].checklist;
+}
+
+export function updateChecklist({ state: { buildingManager } }: OvermindContext, checklist: CheckList) {
+  if (!buildingManager.buildingBeingEdited) {
+    throw new Error(`A building must be open for editing to add a checklist to it`);
+  }
+
+  console.log('what the fuck', buildingManager.buildingBeingEdited, checklist);
+
+  buildingManager.buildingBeingEdited.checklist = { ...checklist };
 }

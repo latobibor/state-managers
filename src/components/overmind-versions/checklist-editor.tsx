@@ -1,7 +1,9 @@
-// import kebabCase from 'lodash.kebabcase';
+import kebabCase from 'lodash.kebabcase';
 import { FormEvent, useState } from 'react';
 import { useOvermindActions, useOvermindState } from '../../overmind/overmind-config';
 import { CheckList, CheckListItem, FreeTextItem, ListItemType } from '../../shared-types/checklist-types';
+import { Question } from './questions/question';
+import { QuestionSpecificFormParts } from './question-form-snippets/question-specific-form-parts';
 
 interface ChecklistEditorProps {
   checklist: CheckList;
@@ -17,11 +19,12 @@ const defaultQuestion: FreeTextItem = {
 };
 
 export function ChecklistEditor({ checklist }: ChecklistEditorProps) {
-  // kell state, mert nem fog a UI frissülni
   const [currentQuestion, setCurrentQuestion] = useState<CheckListItem>(defaultQuestion);
 
   const {} = useOvermindState();
-  const {} = useOvermindActions();
+  const {
+    buildingManager: { updateChecklist },
+  } = useOvermindActions();
 
   function addQuestionWhilePreventingDefault(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,16 +33,48 @@ export function ChecklistEditor({ checklist }: ChecklistEditorProps) {
     // TODO: this is ugly and should be replaced by some standard library
     const formData = new FormData(event.target as any);
 
-    // const newId = kebabCase((formData.get('question-id') || '').toString());
+    const newId = kebabCase((formData.get('question-id') || '').toString());
     const questionTypeAsString = (formData.get('question-type') || '').toString();
 
-    const foundType = Object.entries(ListItemType).find(([_, value]) => value === questionTypeAsString);
+    const foundType = Object.values(ListItemType).find((value) => value === questionTypeAsString);
 
     if (!foundType) {
       throw new Error(
         `Ay ay, ${questionTypeAsString} was not found in ListItemType enum containing [${Object.values(ListItemType).join(',')}]!`,
       );
     }
+
+    const newChecklistArray = [...checklist.items];
+
+    switch (foundType) {
+      case ListItemType.FreeText:
+        newChecklistArray.push({
+          id: newId,
+          type: foundType,
+          label: { en: formData.get('question-label')?.toString() || '' },
+          maxLength: Number(formData.get('question-max-length')) || 200,
+        });
+        break;
+      case ListItemType.Photo:
+        newChecklistArray.push({
+          id: newId,
+          type: foundType,
+          label: { en: formData.get('question-label')?.toString() || '' },
+          maxNumber: Number(formData.get('question-max-photos')) || 200,
+        });
+        break;
+      case ListItemType.YesNo:
+        newChecklistArray.push({
+          id: newId,
+          type: foundType,
+          label: { en: formData.get('question-label')?.toString() || '' },
+        });
+        break;
+      default:
+        throw new Error('Not implemented yet!');
+    }
+
+    updateChecklist({ id: checklist.id, items: newChecklistArray });
   }
 
   function changeQuestionType(event: FormEvent<HTMLSelectElement> & { target: HTMLSelectElement }) {
@@ -98,9 +133,7 @@ export function ChecklistEditor({ checklist }: ChecklistEditorProps) {
               <option key={key}>{value}</option>
             ))}
           </select>
-          {/* Kell neki egy form (switch-case) ami hozzáad-updatel */}
-
-          {/* Kell neki egy lista az elemekkel, amelyeket választani lehet */}
+          <QuestionSpecificFormParts question={currentQuestion} />
 
           <button type="submit">{currentQuestion && currentQuestion.id.length > 0 ? 'Update' : 'Add'} Question</button>
           <button type="reset" className="attention" onClick={closeQuestion}>
@@ -108,6 +141,14 @@ export function ChecklistEditor({ checklist }: ChecklistEditorProps) {
           </button>
         </fieldset>
       </form>
+      <ul>
+        {checklist &&
+          checklist.items.map((question) => (
+            <li key={question.id}>
+              <Question question={question} />
+            </li>
+          ))}
+      </ul>
     </div>
   );
 }
