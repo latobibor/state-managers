@@ -9,17 +9,8 @@ export function openBuilding({ state: { buildingManager } }: OvermindContext, bu
 
   // doc-note: Overmind with its immer dependency can be cumbersome when it deals with taking out one element from the state tree
   // and then "open it to modification". Therefore, it requires manually cloning the object or a totally different strategy.
-  buildingManager.buildingBeingEdited = { ...buildingManager.buildings[buildingId] };
-}
-
-export function createSkeletonBuilding({ state: { buildingManager } }: OvermindContext) {
-  buildingManager.buildingBeingEdited = undefined;
-
-  buildingManager.buildingBeingEdited = {
-    id: '',
-    name: '',
-    rooms: {},
-  };
+  // buildingManager.buildingBeingEdited = { ...buildingManager.buildings[buildingId] };
+  buildingManager.openedBuildingId = buildingId;
 }
 
 export function addBuilding({ state: { buildingManager } }: OvermindContext, building: Omit<Building, 'rooms'>) {
@@ -38,12 +29,12 @@ export function removeBuilding({ state: { buildingManager } }: OvermindContext, 
   delete buildingManager.buildings[buildingId];
 
   if (buildingManager.buildingBeingEdited && buildingManager.buildingBeingEdited.id === buildingId) {
-    buildingManager.buildingBeingEdited = undefined;
+    buildingManager.openedBuildingId = undefined;
   }
 }
 
 export function closeBuilding({ state: { buildingManager } }: OvermindContext) {
-  buildingManager.buildingBeingEdited = undefined;
+  buildingManager.openedBuildingId = undefined;
 }
 
 export function addChecklist({ state: { buildingManager } }: OvermindContext, buildingId: string) {
@@ -51,9 +42,12 @@ export function addChecklist({ state: { buildingManager } }: OvermindContext, bu
     throw new Error(`Building with the ID: [${buildingId}] was not found`);
   }
 
-  buildingManager.buildings[buildingId].checklist = {
-    id: 'placeholder',
-    items: [],
+  buildingManager.buildings[buildingId] = {
+    ...buildingManager.buildings[buildingId],
+    checklist: {
+      id: 'placeholder',
+      items: [],
+    },
   };
 }
 

@@ -33,16 +33,12 @@ export function BuildingEditor() {
   }
 
   function addChecklistToBuilding() {
-    console.log('buildingBeingEdited', buildingBeingEdited);
-
     if (!buildingBeingEdited?.id) {
       throw new Error('You cannot add checklist to a non-existent building!');
     }
 
     addChecklist(buildingBeingEdited?.id);
   }
-
-  console.log('Checklist of Building', buildingBeingEdited?.checklist);
 
   return (
     <div className="building-manager-building-form">
